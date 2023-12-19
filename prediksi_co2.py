@@ -10,12 +10,18 @@ df['Year'] = pd.to_datetime(df['Year'], format='%Y')
 df.set_index(['Year'], inplace=True)
 
 st.title('CO2 EMISSION PREDICTION')
-year = st.slider("Geser untuk mengetahui hasil prediksi CO2 dimulai dari tahun 2014 sampai 30 tahun kedepan.",1,30, step=1)
 
-pred = model.forecast(year)
-pred = pd.DataFrame(pred, columns=['CO2'])
+# Slider untuk rentang tahun 2014-2044
+year_slider_1_29 = st.slider("Geser ke tahun yang ingin Anda prediksi!", 2014, 2044, step=1)
 
+# Konversi nilai slider 
+year_slider_2014_2044 = year_slider_1_29 - 2013
+
+# Gunakan nilai tahun yang dihasilkan untuk prediksi
 if st.button("Predict"):
+    year = year_slider_2014_2044
+    pred = model.forecast(year)
+    pred = pd.DataFrame(pred, columns=['CO2'])
 
     col1, col2 = st.columns([2,3])
     with col1:
